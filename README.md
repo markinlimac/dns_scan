@@ -3,10 +3,9 @@
 Este repositório foi criado para armazenar a ferramenta de escaneamento de DNS (catdns), a qual ja possui algumas wordlists com muitas palavras, porém pode ser usada qualquer wordlist que esteja salva no seu computador. Esta ferramenta concatena comandos com as palavras da wordlist para saber se o host existe ou nao em um determinado dominio. Esta ferramenta tambem possui comandos para que encontre arquivos e diretorios, para executar o whois e tambem para fazer trasnferência de zona de um determinado host.
 É uma ferramenta que gera ruidos no servidor e que nao possui nenhuma segurança por default. 
 
-## Funcionamento ##
+## Modo de uso ##
 Para utilizaar essa ferramenta use o git para importar este repositorio no linux, dê permissão de execução para o arquivo usando o comando (chmod +x catdns), depois basta executar o arquivo e passar a worlist como argumento, com o comando de execuçao (./catdns wordlist.txt).
 
-## Modo de uso ##
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|  
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| .. DNS HACKER v1.0 .. |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|  
 |-|-|-|-|-|-|-|-|-|-| Marco Antonio Lima -- markinlimac@gmail.com |-|-|-|-|-|-|-|-|-|-|  
