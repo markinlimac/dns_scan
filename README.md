@@ -7,10 +7,10 @@ Este repositório foi criado para armazenar a ferramenta de escaneamento de DNS 
 Para utilizaar essa ferramenta use o git para importar este repositorio no linux, dê permissão de execução para o arquivo usando o comando (chmod +x catdns), depois basta executar o arquivo e passar a worlist como argumento, com o comando de execuçao (./catdns wordlist.txt).
 
 ## Modo de uso ##
-+|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
-+|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| .. DNS HACKER v1.0 .. |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
-+|-|-|-|-|-|-|-|-|-|-| Marco Antonio Lima -- markinlimac@gmail.com |-|-|-|-|-|-|-|-|-|-|
-+|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| .. DNS HACKER v1.0 .. |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+|-|-|-|-|-|-|-|-|-|-| Marco Antonio Lima -- markinlimac@gmail.com |-|-|-|-|-|-|-|-|-|-|
+|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 
 1 - DNS DIRETO
 2 - DNS REVERSO
