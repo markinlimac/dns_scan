@@ -19,13 +19,13 @@ Para utilizaar essa ferramenta use o git para importar este repositorio no linux
 5 - WHOIS  
 6 - ALL  
 
-==> Escolha algumas das opçoes para utilizar a ferramenta:
-1 é o escaneamento de dns direto, onde você passa o dominio e a partir da wordlist escolhida o programa irá tentar localizar outros dominios.
-2 é o escaneamento de dns reverso, onde você passa um range de IP, e o programa tenta encontrar dominios para os IPs.
-3 é a transferência de zona, onde voce passa o dominio e o programa tenta a transferência de zona para que todos seus dominios sejam revelados.
-4 é a busca por arquivos e diretórios, onde a partir da mesma wordlist usada na busca de dns, o programa tenta encontrar arquivos e diretórios no dominio digitado.
-5 é o whois, ferramenta a qual o programa traz dados de quem é o hospedeiro daquele dominio, range de IP etc. Para ajudar na information gathering.
-6 é o all, onde executa todos os comandos citados.
+==> Escolha algumas das opçoes para utilizar a ferramenta:  
+1 é o escaneamento de dns direto, onde você passa o dominio e a partir da wordlist escolhida o programa irá tentar localizar outros dominios.  
+2 é o escaneamento de dns reverso, onde você passa um range de IP, e o programa tenta encontrar dominios para os IPs.    
+3 é a transferência de zona, onde voce passa o dominio e o programa tenta a transferência de zona para que todos seus dominios sejam revelados.  
+4 é a busca por arquivos e diretórios, onde a partir da mesma wordlist usada na busca de dns, o programa tenta encontrar arquivos e diretórios no dominio digitado.  
+5 é o whois, ferramenta a qual o programa traz dados de quem é o hospedeiro daquele dominio, range de IP etc. Para ajudar na information gathering.  
+6 é o all, onde executa todos os comandos citados.  
 
 ## Autor: ##
        Marco Antônio de Lima Costa (markinlimac@gmail.com)
