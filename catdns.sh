@@ -1,18 +1,27 @@
 : fileformat=unix
-#!/bin/bash
-if [ "$1" ==  "" ]
-then
-tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
-tput setaf 4; tput bold; echo -n "|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0; tput bold; echo -n "  Uso: ./catdns wordlist.txt "; tput setaf 4; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0;
-tput setaf 4; tput bold; echo -n "|-|-|-|-|-|-|-|-|-|-|"; tput sgr0; tput bold; echo -n " Marco Antônio Lima -- markinlimac@gmail.com "; tput setaf 4; echo "|-|-|-|-|-|-|-|-|-|-|"; tput sgr0;
-tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
-else
+#!/bin/sh
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
 tput setaf 4; tput bold; echo -n "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0; tput bold; echo -n " .. DNS HACKER v1.0 .. "; tput setaf 4; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0;
 tput setaf 4; tput bold; echo -n "|-|-|-|-|-|-|-|-|-|-|"; tput sgr0; tput bold; echo -n " Marco Antônio Lima -- markinlimac@gmail.com "; tput setaf 4; echo "|-|-|-|-|-|-|-|-|-|-|"; tput sgr0;
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
 echo ""
 tput setaf 4; tput bold; cat hack.txt; tput sgr0
+echo ""
+
+read -p "Escolha a wordlist: " wordlist
+while [ $wordlist == "show" ]
+do
+ls *.txt
+echo ""
+read -p "Escolha a wordlist: " wordlist
+done
+
+while [ $wordlist != "rato.txt" ] || [ $wordlist != "big.txt" ]
+do
+tput setaf 1; tput bold; echo -n "Digite uma opção válida "; tput sgr0
+read -p "Escolha a wordlist: " wordlist
+done
+
 echo ""
 echo "1 - DNS DIRETO"
 echo "2 - DNS REVERSO"
@@ -23,23 +32,22 @@ echo "6 - ALL"
 echo "7 - BAIXAR FERRAMENTAS NECESSARIAS"
 echo ""
 
-read usuario
+read -p "Escolha uma opção: " usuario
 
-while [ "$usuario" -lt "1" ]
+while [ "$usuario" -lt "1" ] || [ $usuario -gt "7" ]
 do
 tput setaf 1; tput bold; read -p "Digite uma opção valida: " usuario; tput sgr0
 done
 
 if [ "$usuario" -eq "1" ]
 then
-echo ""
 read -p "Digite a url do site: " dominio
-tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-| BUSCANDO DNS DIRETO |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
-for url in $(cat $1)
-do
 echo ""
-echo -n $url$dominio "=> "
-host $url$dominio | grep "has address" | cut -d " " -f4
+tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-| BUSCANDO DNS DIRETO |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
+for url in $(cat $wordlist)
+do
+host=$(host $url$dominio | grep "has address" | cut -d " " -f4)
+if [ -z $host ]; then continue; else echo $url$dominio "=>" $host;fi
 done
 fi
 
@@ -69,10 +77,10 @@ then
 echo ""
 read -p "Digite a url do site: " dominio
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-| ENCONTRADNO ARQUIVOS E DIRETORIOS |-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
-for palavra in $(cat $1)
+for palavra in $(cat $wordlist)
 do
-resposta = $((curl -s -o /dev/null -w "%{http_code}" $dominio/$palavra/)) #diretorio
-resposta1 = $((curl -s -o /dev/null -w "%{http_code}" $dominio/$palavra)) #arquivo
+resposta=$(curl -s -o /dev/null -w "%{http_code}" $dominio/$palavra/) #diretorio
+resposta1=$(curl -s -o /dev/null -w "%{http_code}" $dominio/$palavra) #arquivo
 if [ $resposta == "200" ]
 then
 echo "Diretorio encontrado: $palavra"
@@ -105,7 +113,7 @@ done
 echo ""
 echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-| BUSCANDO DNS DIRETO |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
-for url in $(cat $1)
+for url in $(cat $wordlist)
 do host $url$dominio #| grep "has address" | cut -d " " -f4
 done
 echo ""
@@ -123,7 +131,7 @@ done
 echo ""
 echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-| ENCONTRADNO ARQUIVOS E DIRETORIOS |-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
-for palavra in $(cat $1) #lendo cada palavra da lista(lista.txt) e armazenando na palavra
+for palavra in $(cat $wordlist) #lendo cada palavra da lista(lista.txt) e armazenando na palavra
 do
 resposta = $(curl -s -o /dev/null -w "%{http_code}" $dominio/$palavra/) #diretorio
 resposta1 = $(curl -s -o /dev/null -w "%{http_code}" $dominio/$palavra) #arquivo
@@ -145,6 +153,4 @@ while read comando
 do
 $comando
 done < ferramentas.txt
-fi
-
 fi
