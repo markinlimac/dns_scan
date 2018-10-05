@@ -11,16 +11,16 @@ echo ""
 read -p "Escolha a wordlist: " wordlist
 while [ $wordlist == "show" ]
 do
-ls *.txt
+tput setaf 2; tput bold; ls wordlists/; tput sgr0
 echo ""
 read -p "Escolha a wordlist: " wordlist
 done
 
-while [ $wordlist != "rato.txt" ] || [ $wordlist != "big.txt" ]
-do
-tput setaf 1; tput bold; echo -n "Digite uma opção válida "; tput sgr0
-read -p "Escolha a wordlist: " wordlist
-done
+#while [ $wordlist != "rato.txt" ] || [ $wordlist != "big.txt" ]
+#do
+#tput setaf 1; tput bold; echo -n "Digite uma opção válida "; tput sgr0
+#read -p "Escolha a wordlist: " wordlist
+#done
 
 echo ""
 echo "1 - DNS DIRETO"
@@ -44,7 +44,7 @@ then
 read -p "Digite a url do site: " dominio
 echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-| BUSCANDO DNS DIRETO |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
-for url in $(cat $wordlist)
+for url in $(cat wordlists/$wordlist)
 do
 host=$(host $url$dominio | grep "has address" | cut -d " " -f4)
 if [ -z $host ]; then continue; else echo $url$dominio "=>" $host;fi
@@ -53,9 +53,9 @@ fi
 
 if [ $usuario == "2" ]
 then
-echo ""
 read -p "Digite o começo do ip: " ipcomeco
 read -p "Bloco do ip desejado (whois): " bloco1 bloco2
+echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-| BUSCANDO DNS REVERSO |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
 for ip in $(seq $bloco1 $bloco2)
 do host $ipcomeco.$ip
@@ -64,8 +64,8 @@ fi
 
 if [ $usuario == "3" ]
 then
-echo ""
 read -p "Digite a url do site: " dominio
+echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-| TENTANDO TRANSFERENCIA DE ZONA |-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
 for server in $(host -t ns $dominio | cut -d " " -f4)
 do host -l $dominio $server | grep "has address"
@@ -74,13 +74,15 @@ fi
 
 if [ $usuario == "4" ]
 then
-echo ""
 read -p "Digite a url do site: " dominio
+echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-| ENCONTRADNO ARQUIVOS E DIRETORIOS |-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
-for palavra in $(cat $wordlist)
+for palavra in $(cat wordlists/$wordlist)
 do
 resposta=$(curl -s -o /dev/null -w "%{http_code}" $dominio/$palavra/) #diretorio
 resposta1=$(curl -s -o /dev/null -w "%{http_code}" $dominio/$palavra) #arquivo
+echo $resposta $palavra
+echo $resposta1 $palavra
 if [ $resposta == "200" ]
 then
 echo "Diretorio encontrado: $palavra"
@@ -94,8 +96,8 @@ fi
 
 if [ "$usuario" -eq "5" ]
 then
-echo ""
 read -p "Digite a url do site: " dominio
+echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| EXECUTANDO WHOIS |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
 for pingip in $(ping -c 1 $dominio | grep "64 bytes" | cut -d "(" -f2 | cut -d ")" -f1)
 do whois $pingip
@@ -113,8 +115,10 @@ done
 echo ""
 echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-| BUSCANDO DNS DIRETO |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
-for url in $(cat $wordlist)
-do host $url$dominio #| grep "has address" | cut -d " " -f4
+for url in $(cat wordlists/$wordlist)
+do
+host=$(host $url$dominio | grep "has address" | cut -d " " -f4)
+if [ -z $host ]; then continue; else echo $url$dominio "=>" $host;fi
 done
 echo ""
 echo ""
@@ -131,7 +135,7 @@ done
 echo ""
 echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-| ENCONTRADNO ARQUIVOS E DIRETORIOS |-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
-for palavra in $(cat $wordlist) #lendo cada palavra da lista(lista.txt) e armazenando na palavra
+for palavra in $(cat wordlists/$wordlist) #lendo cada palavra da lista(lista.txt) e armazenando na palavra
 do
 resposta = $(curl -s -o /dev/null -w "%{http_code}" $dominio/$palavra/) #diretorio
 resposta1 = $(curl -s -o /dev/null -w "%{http_code}" $dominio/$palavra) #arquivo
