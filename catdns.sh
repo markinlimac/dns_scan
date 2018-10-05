@@ -68,7 +68,9 @@ read -p "Digite a url do site: " dominio
 echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-| TENTANDO TRANSFERENCIA DE ZONA |-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
 for server in $(host -t ns $dominio | cut -d " " -f4)
-do host -l $dominio $server | grep "has address"
+do
+transferencia=$(host -l $dominio $server | grep "has address")
+if [ $transferencia -z ]; then echo "Não foi possivel executar a trasnferência"; fi
 done
 fi
 
