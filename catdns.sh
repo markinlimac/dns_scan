@@ -8,20 +8,23 @@ echo ""
 tput setaf 4; tput bold; cat hack.txt; tput sgr0
 echo ""
 
-read -p "Escolha a wordlist: " wordlist
-while [ $wordlist == "show" ]
+while :
 do
-tput setaf 2; tput bold; ls wordlists/; tput sgr0
-echo ""
 read -p "Escolha a wordlist: " wordlist
+
+case $wordlist in
+show) tput setaf 2; tput bold; ls wordlists/; tput sgr0
+echo "" ;;
+SHOW) tput setaf 2; tput bold; ls wordlists/; tput sgr0
+echo "" ;;
+big.txt) break ;;
+rato.txt) break ;;
+*) tput setaf 1; tput bold; echo "Digite uma opção valida"; tput sgr0 ;;
+esac
 done
 
-#while [ $wordlist != "rato.txt" ] || [ $wordlist != "big.txt" ]
-#do
-#tput setaf 1; tput bold; echo -n "Digite uma opção válida "; tput sgr0
-#read -p "Escolha a wordlist: " wordlist
-#done
-
+while :
+do
 echo ""
 echo "1 - DNS DIRETO"
 echo "2 - DNS REVERSO"
@@ -30,18 +33,12 @@ echo "4 - ARQUIVOS E DIRETORIOS"
 echo "5 - WHOIS"
 echo "6 - ALL"
 echo "7 - BAIXAR FERRAMENTAS NECESSARIAS"
+echo "8 - SAIR"
 echo ""
-
 read -p "Escolha uma opção: " usuario
 
-while [ "$usuario" -lt "1" ] || [ $usuario -gt "7" ]
-do
-tput setaf 1; tput bold; read -p "Digite uma opção valida: " usuario; tput sgr0
-done
-
-if [ "$usuario" -eq "1" ]
-then
-read -p "Digite a url do site: " dominio
+case $usuario in
+1) read -p "Digite a url do site: " dominio
 echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-| BUSCANDO DNS DIRETO |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
 for url in $(cat wordlists/$wordlist)
@@ -49,22 +46,20 @@ do
 host=$(host $url$dominio | grep "has address" | cut -d " " -f4)
 if [ -z $host ]; then continue; else echo $url$dominio "=>" $host;fi
 done
-fi
+tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0 ;;
 
-if [ $usuario == "2" ]
-then
-read -p "Digite o começo do ip: " ipcomeco
+2) read -p "Digite o começo do ip: " ipcomeco
 read -p "Bloco do ip desejado (whois): " bloco1 bloco2
 echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-| BUSCANDO DNS REVERSO |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
 for ip in $(seq $bloco1 $bloco2)
-do host $ipcomeco.$ip
+do
+host=$(host $ipcomeco.$ip | cut -d " " -f5)
+if [ $host == "3(NXDOMAIN)" ]; then continue; else echo $ipcomeco"."$ip "=>" $host;fi
 done
-fi
+tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0 ;;
 
-if [ $usuario == "3" ]
-then
-read -p "Digite a url do site: " dominio
+3) read -p "Digite a url do site: " dominio
 echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-| TENTANDO TRANSFERENCIA DE ZONA |-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
 for server in $(host -t ns $dominio | cut -d " " -f4)
@@ -72,11 +67,9 @@ do
 transferencia=$(host -l $dominio $server | grep "has address")
 if [ $transferencia -z ]; then echo "Não foi possivel executar a trasnferência"; fi
 done
-fi
+tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0 ;;
 
-if [ $usuario == "4" ]
-then
-read -p "Digite a url do site: " dominio
+4) read -p "Digite a url do site: " dominio
 echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-| ENCONTRADNO ARQUIVOS E DIRETORIOS |-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
 for palavra in $(cat wordlists/$wordlist)
@@ -94,21 +87,17 @@ then
 echo "Arquivo encontrado: $palavra"
 fi
 done
-fi
+tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0 ;;
 
-if [ "$usuario" -eq "5" ]
-then
-read -p "Digite a url do site: " dominio
+5) read -p "Digite a url do site: " dominio
 echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| EXECUTANDO WHOIS |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
 for pingip in $(ping -c 1 $dominio | grep "64 bytes" | cut -d "(" -f2 | cut -d ")" -f1)
 do whois $pingip
 done
-fi
+tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0 ;;
 
-if [ "$usuario" -eq "6" ]
-then
-echo ""
+6) echo ""
 read -p "Digite a url do site: " dominio
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| EXECUTANDO WHOIS |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
 for pingip in $(ping -c 1 $dominio | grep "64 bytes" | cut -d "(" -f2 | cut -d ")" -f1)
@@ -150,13 +139,18 @@ then
 echo "Arquivo encontrado: $palavra"
 fi
 done
-fi
+tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0 ;;
 
-if [ $usuario == "7" ]
-then
-tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-| BAIXANDO FERRAMENTAS |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
+7) tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-| BAIXANDO FERRAMENTAS |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
 while read comando
 do
 $comando
 done < ferramentas.txt
-fi
+tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0 ;;
+
+8) echo "Obrigado por usar essa ferramenta!"
+break ;;
+
+*) tput setaf 1; tput bold; echo "Digite uma opção valida"; tput sgr0 ;;
+esac
+done
