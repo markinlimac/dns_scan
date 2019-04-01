@@ -1,3 +1,24 @@
+PASTA_WORDLISTS=wordlists
+
+## Exibe as wordlists disponíveis
+function exibe_wordlists()
+{
+    ls $PASTA_WORDLISTS
+    echo # Pula uma linha na tela
+}
+
+## Verifica se a wordlist existe
+function checa_wordlist()
+{
+    filename=$1
+
+    if [ -e "$filename" ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 : fileformat=unix
 #!/bin/sh
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
@@ -10,6 +31,9 @@ echo ""
 
 while :
 do
+
+echo "wordlists disponíveis: "
+exibe_wordlists
 read -p "Escolha a wordlist: " wordlist
 
 case $wordlist in
@@ -19,7 +43,7 @@ SHOW) tput setaf 2; tput bold; ls wordlists/; tput sgr0
 echo "" ;;
 big.txt) break ;;
 rato.txt) break ;;
-*) tput setaf 1; tput bold; echo "Digite uma opção valida"; tput sgr0 ;;
+*) tput setaf 1; tput bold; echo -e "Digite uma opção valida\n"; tput sgr0 ;;
 esac
 done
 
