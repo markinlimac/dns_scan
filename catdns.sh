@@ -33,7 +33,8 @@ echo "4 - ARQUIVOS E DIRETORIOS"
 echo "5 - WHOIS"
 echo "6 - ALL"
 echo "7 - BAIXAR FERRAMENTAS NECESSARIAS"
-echo "8 - SAIR"
+echo "8 - PARSING DE SITES"
+echo "9 - SAIR"
 echo ""
 read -p "Escolha uma opção: " usuario
 
@@ -130,13 +131,13 @@ for palavra in $(cat wordlists/$wordlist) #lendo cada palavra da lista(lista.txt
 do
 resposta = $(curl -s -o /dev/null -w "%{http_code}" $dominio/$palavra/) #diretorio
 resposta1 = $(curl -s -o /dev/null -w "%{http_code}" $dominio/$palavra) #arquivo
-if [ $resposta == "200" ]
+if [ $resposta == "200" ];
 then
-echo "Diretorio encontrado: $palavra"
+echo "Diretorio encontrado: $palavra";
 fi
-if [ $resposta1 == "200" ]
+if [ $resposta1 == "200" ];
 then
-echo "Arquivo encontrado: $palavra"
+echo "Arquivo encontrado: $palavra";
 fi
 done
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0 ;;
@@ -148,9 +149,29 @@ $comando
 done < ferramentas.txt
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0 ;;
 
-8) echo "Obrigado por usar essa ferramenta!"
+8) read -p "Digite a url do site: " dominio
+echo ""
+wget -q $dominio -O index.html
+grep href index.html | awk -F "href" '{print $2; if($3 !="") print $3}' | cut -d " " -f1 | cut -d '"' -f2 | cut -d "'" -f2 | grep "/"
+rm index.html ;;
+
+9) echo "Obrigado por usar essa ferramenta!"
 break ;;
 
 *) tput setaf 1; tput bold; echo "Digite uma opção valida"; tput sgr0 ;;
 esac
 done
+
+#fazer script python para baixar pacote completo do TOR /www.torproject.org/
+#fazer script python para habilitar e desabilitar TOR /torproject.org/torbutton/
+#ver se o proxy tor esta recebendo informaçao na porta 9050 e se o privoxy esta recebendo informaçao na porta 8118
+#checar se realmente esta conectado na rede tor /check.torproject.org/
+#para resolver dominios nao usar host e sim tor-resolve
+#para saber quais outros serviços estao rodando ativar proxychains /proxychains.sourceforge.net/
+#proxychains nmap -sT -PN -n -sV -p portas que deseja examinar separadas por virgula ip
+#conectar ao servidor web pela porta 80 atraves do proxychains netcat ou socat recebendo informaçoes na porta 9050
+#socat TCP4-LISTEN:8080,fork
+#SOCKS4a:127.0.0.1:10.10.10.100:80,socksport=9050 &
+#para obter informaçao do servidor web nc 127.0.0.1 8080
+#HEAD / HTTP/1.0 enter duas vezes
+#mudar para wget o curl dos diretorios e arquivos 
