@@ -1,4 +1,4 @@
-lista-comissarios
+lista-comissarios.
 pag.
 pagamento.
 buy.
