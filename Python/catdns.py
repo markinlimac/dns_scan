@@ -1,5 +1,6 @@
 import sys
 import os
+import socket
 
 def printProgramIcon():
   with open("../hack.txt") as f:
@@ -29,24 +30,33 @@ def choiceWordlist():
         if (wordlist == archive):
           temp = 1
   
-  return wordlist
+  return "../Wordlists/" + wordlist
 
-def directDNS():
-  print('oi1')
+def directDNS(wordlist):
+  domain = input("Digite a url do site: ")
+  f = open(wordlist, "r") 
+  for line in f.readlines():
+    line = line.strip("\n")
+    try:
+      dns = socket.gethostbyname(line+domain)
+      print(line + domain + " ==> " + dns)
+    except:
+      pass
+  
 
-def reverseDNS():
+def reverseDNS(wordlist):
   print('oi2')
 
-def zoneTransfer():
+def zoneTransfer(wordlist):
   print('oi3')
 
-def filesAndDirectories():
+def filesAndDirectories(wordlist):
   print('oi4')
 
-def whois():
+def whois(wordlist):
   print('oi5')
 
-def siteParsing():
+def siteParsing(wordlist):
   print('oi7')
 
 
@@ -63,36 +73,36 @@ def menu(option, wordlist):
   userOption = int(input('\nEscolha uma opção: '))
   
   if userOption == 1:
-    directDNS()
+    directDNS(wordlist)
     option = userOption
   
   elif userOption == 2:
-    reverseDNS()
+    reverseDNS(wordlist)
     option = userOption
 
   elif userOption == 3:
-    zoneTransfer()
+    zoneTransfer(wordlist)
     option = userOption
 
   elif userOption == 4:
-    filesAndDirectories()
+    filesAndDirectories(wordlist)
     option = userOption
 
   elif userOption == 5:
-    whois()
+    whois(wordlist)
     option = userOption
 
   elif userOption == 6:
-    siteParsing()
+    siteParsing(wordlist)
     option = userOption
 
   elif userOption == 7:
-    siteParsing()
-    directDNS()
-    reverseDNS()
-    zoneTransfer()
-    filesAndDirectories()
-    whois()
+    siteParsing(wordlist)
+    directDNS(wordlist)
+    reverseDNS(wordlist)
+    zoneTransfer(wordlist)
+    filesAndDirectories(wordlist)
+    whois(wordlist)
     option = userOption
 
   elif userOption == 0:
