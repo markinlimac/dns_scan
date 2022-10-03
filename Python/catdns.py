@@ -1,114 +1,91 @@
 import sys
 import os
 
-def printProgramIcon():
-  with open("../hack.txt") as f:
-    sys.stdout.write(f.read())
+class Menu():
+  def __init__(self):
+    self.printProgramIcon()
+    self.wordlists = os.listdir("../Wordlists")
+    self.wordlist = self.choiceWordlist()
+    self.showOptions()
+  
+  def printProgramIcon(self):
+    with open("../hack.txt") as f:
+      sys.stdout.write(f.read())
+  
+  def choiceWordlist(self):
+    temp = 0
 
-def choiceWordlist():
-  wordlists = os.listdir("../Wordlists")
-  temp = 0
-
-  wordlist = input('\nEscolha a wordlist: ')
-  for archive in wordlists:
-    if (wordlist == archive):
-      temp = 1
-
-  while(temp == 0):
-    if(wordlist.upper() == "SHOW"):
-      for archive in wordlists:
-        print(archive)
+    while(not temp):
       wordlist = input('\nEscolha a wordlist: ')
-      for archive in wordlists:
-        if (wordlist == archive):
-          temp = 1
-    else:
-      print("Digite uma opção valida")
-      wordlist = input('\nEscolha a wordlist: ')
-      for archive in wordlists:
-        if (wordlist == archive):
-          temp = 1
+      if wordlist in self.wordlists:
+        temp = 1
+      elif wordlist.upper() == "SHOW":
+        for archive in self.wordlists:
+          print(archive)
+      else:
+        print("Digite uma opção valida")
+
+    return wordlist
   
-  return wordlist
+  def showOptions(self):
+    print("\n1 - DNS DIRETO")
+    print("2 - DNS REVERSO")
+    print("3 - TRANSFERENCIA DE ZONA")
+    print("4 - ARQUIVOS E DIRETORIOS")
+    print("5 - WHOIS")
+    print("6 - PARSING DE SITES")
+    print("7 - ALL")
+    print("0 - SAIR")
 
-def directDNS():
-  print('oi1')
+    def selectTool(self):
+      if self.option == 1:
+        self.directDNS()
+      elif self.option == 2:
+        reverseDNS()
+      elif self.option == 3:
+        zoneTransfer()
+      elif self.option == 4:
+        filesAndDirectories()
+      elif self.option == 5:
+        whois()
+      elif self.option == 6:
+        siteParsing()
+      elif self.option == 7:
+        siteParsing()
+        directDNS()
+        reverseDNS()
+        zoneTransfer()
+        filesAndDirectories()
+        whois()
+      else:
+        print("Opção inválida!")
+      return "Obrigado por usar essa ferramenta!"
 
-def reverseDNS():
-  print('oi2')
+class Program():
+  def directDNS():
+    print('oi1')
 
-def zoneTransfer():
-  print('oi3')
+  def reverseDNS():
+    print('oi2')
 
-def filesAndDirectories():
-  print('oi4')
+  def zoneTransfer():
+    print('oi3')
 
-def whois():
-  print('oi5')
+  def filesAndDirectories():
+    print('oi4')
 
-def siteParsing():
-  print('oi7')
+  def whois():
+    print('oi5')
 
-
-def menu(option, wordlist):
-  print("\n1 - DNS DIRETO")
-  print("2 - DNS REVERSO")
-  print("3 - TRANSFERENCIA DE ZONA")
-  print("4 - ARQUIVOS E DIRETORIOS")
-  print("5 - WHOIS")
-  print("6 - PARSING DE SITES")
-  print("7 - ALL")
-  print("0 - SAIR")
-
-  userOption = int(input('\nEscolha uma opção: '))
-  
-  if userOption == 1:
-    directDNS()
-    option = userOption
-  
-  elif userOption == 2:
-    reverseDNS()
-    option = userOption
-
-  elif userOption == 3:
-    zoneTransfer()
-    option = userOption
-
-  elif userOption == 4:
-    filesAndDirectories()
-    option = userOption
-
-  elif userOption == 5:
-    whois()
-    option = userOption
-
-  elif userOption == 6:
-    siteParsing()
-    option = userOption
-
-  elif userOption == 7:
-    siteParsing()
-    directDNS()
-    reverseDNS()
-    zoneTransfer()
-    filesAndDirectories()
-    whois()
-    option = userOption
-
-  elif userOption == 0:
-    option = userOption
-  
-  else:
-    print("Opção inválida!")
+  def siteParsing():
+    print('oi7')
 
 def main():
-  option = 1
-  printProgramIcon()
-  wordlist = choiceWordlist()
-
-  while(option != 0):
-    menu(option, wordlist)
-  return "Obrigado por usar essa ferramenta!"
+  menu = Menu()
+  # option = int(input('\nEscolha uma opção: '))
+  # while not option:
+  #   Program(menu.userOption)
+  #   option = int(input('\nEscolha uma opção: '))
 
 if __name__ == '__main__' :
   main()
