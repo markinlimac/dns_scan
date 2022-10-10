@@ -3,6 +3,9 @@
 import sys
 import os
 from direct_dns import *
+import socket
+import whois
+import ipaddress
 
 class Menu():
   def __init__(self):
@@ -53,8 +56,17 @@ class Program():
         if iplist:
           print(domain + ' => ' + str(iplist))
 
-    elif menu.option == 2:
-      self.reverseDNS()
+    elif menu.option == 2: #reverse DNS
+      ip = input("Digite o ip > ")
+      range = input("Digite a faixa (notação CIDR) > ")
+      for x in ipaddress.ip_interface(ip+'/'+range).network:
+        try:
+          data = socket.gethostbyaddr(str(x))
+          host = repr(data[0])
+          print(str(x) + ' => ' + host)
+        except Exception:
+          pass
+
     elif menu.option == 3:
       self.zoneTransfer()
     elif menu.option == 4:
@@ -74,9 +86,6 @@ class Program():
       print("Obrigado por usar essa ferramenta!")
     else:
       print("Opção inválida!")
-
-  def reverseDNS(self):
-    print('oi2')
 
   def zoneTransfer(self):
     print('oi3')
