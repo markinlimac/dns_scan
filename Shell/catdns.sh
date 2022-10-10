@@ -5,7 +5,7 @@ tput setaf 4; tput bold; echo -n "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0; t
 tput setaf 4; tput bold; echo -n "|-|-|-|-|-|-|-|-|-|-|"; tput sgr0; tput bold; echo -n " Marco Antônio Lima -- markinlimac@gmail.com "; tput setaf 4; echo "|-|-|-|-|-|-|-|-|-|-|"; tput sgr0;
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
 echo ""
-tput setaf 4; tput bold; cat hack.txt; tput sgr0
+tput setaf 4; tput bold; cat ../hack.txt; tput sgr0
 echo ""
 
 while :
@@ -42,7 +42,7 @@ case $usuario in
 1) read -p "Digite a url do site: " dominio
 echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-| BUSCANDO DNS DIRETO |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
-for url in $(cat wordlists/$wordlist)
+for url in $(cat ../Wordlists/$wordlist)
 do
 host=$(host $url$dominio | grep "has address" | cut -d " " -f4)
 if [ -z $host ]; then continue; else echo $url$dominio "=>" $host;fi
@@ -73,7 +73,7 @@ tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 4) read -p "Digite a url do site: " dominio
 echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-| ENCONTRADNO ARQUIVOS E DIRETORIOS |-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
-for palavra in $(cat wordlists/$wordlist)
+for palavra in $(cat ../Wordlists/$wordlist)
 do
 resposta=$(curl -s -o /dev/null -w "%{http_code}" $dominio/$palavra/) #diretorio
 resposta1=$(curl -s -o /dev/null -w "%{http_code}" $dominio/$palavra) #arquivo
@@ -105,7 +105,7 @@ done
 echo ""
 echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-|-|-| BUSCANDO DNS DIRETO |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
-for url in $(cat wordlists/$wordlist)
+for url in $(cat ../Wordlists/$wordlist)
 do
 host=$(host $url$dominio | grep "has address" | cut -d " " -f4)
 if [ -z $host ]; then continue; else echo $url$dominio "=>" $host;fi
@@ -125,7 +125,7 @@ done
 echo ""
 echo ""
 tput setaf 4; tput bold; echo "|-|-|-|-|-|-|-|-|-|-|-|-| ENCONTRADNO ARQUIVOS E DIRETORIOS |-|-|-|-|-|-|-|-|-|-|-|-|"; tput sgr0
-for palavra in $(cat wordlists/$wordlist) #lendo cada palavra da lista(lista.txt) e armazenando na palavra
+for palavra in $(cat ../Wordlists/$wordlist) #lendo cada palavra da lista(lista.txt) e armazenando na palavra
 do
 resposta = $(curl -s -o /dev/null -w "%{http_code}" $dominio/$palavra/) #diretorio
 resposta1 = $(curl -s -o /dev/null -w "%{http_code}" $dominio/$palavra) #arquivo
