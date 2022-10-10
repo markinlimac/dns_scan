@@ -18,7 +18,7 @@ class DirectDNS():
         except Exception:
             # fail gracefully!
             return False
-    #
+
     def getIPx(self):
         """
         This method returns an array containing
@@ -32,7 +32,7 @@ class DirectDNS():
         except Exception:
             # fail gracefully!
             return False
-    #
+
     def getHost(ip):
         """
         This method returns the 'True Host' name for a
@@ -45,7 +45,7 @@ class DirectDNS():
         except Exception:
             # fail gracefully
             return False
-    #
+
     def getAlias(d):
         """
         This method returns an array containing
@@ -59,19 +59,3 @@ class DirectDNS():
         except Exception:
             # fail gracefully
             return False
-    #
-
-    # test it
-
-    # x = raw_input("Domain name or IP address? > ")
-
-
-    # a = getIP(x)
-    # b = getIPx(x)
-    # c = getHost(x)
-    # d = getAlias(x)
-
-    # print " IP ", a
-    # print " IPx ", b
-    # print " Host ", c
-    # print " Alias ", d
